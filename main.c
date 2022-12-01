@@ -210,6 +210,9 @@ void update_gravity(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT]) {
                             case SDL_SCANCODE_UP:
                                 brush_size += 1;
                                 break;
+                            case SDL_SCANCODE_R:
+                                fill_air(grille);
+                                break;
                             case SDL_SCANCODE_DOWN:
                                 brush_size -= 1;
                                 if(brush_size<=1){
