@@ -87,6 +87,13 @@ int check_right(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y, in
     return 0;
 }
 
+void spawn_element(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],struct element type,int x,int y,int frame){
+    if(x>=0 && x< PIXEL_WIDTH && y>=0 && y<PIXEL_HEIGHT) {
+        grille[x][y] = type;
+        grille[x][y].spawn_frame = frame;
+    }
+}
+
 
 void check_movement(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y,int update){
     struct element elemtemp = grille[x][y];
@@ -96,9 +103,16 @@ void check_movement(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y
     }
     if(elemtemp.id<0){
         struct element elemtemp2= get_element_by_id(elemtemp.id);
-        if(grille[x][y+1].weight<elemtemp2.weight || grille[x][y+1].weight==0){
-            grille[x][y+1]=elemtemp2;
+
+        if(elemtemp2.gaz==0 && (grille[x][y+1].weight<elemtemp2.weight || grille[x][y+1].weight==0)){
+            spawn_element(grille,elemtemp2,x,y+1, update);
         }
+        else if(elemtemp2.gaz==1 && (grille[x][y-1].weight<elemtemp2.weight || grille[x][y-1].weight==0)){
+            spawn_element(grille,elemtemp2,x,y-1, update);
+        }
+    }
+    else if(elemtemp.lifetime>0 && elemtemp.last_update>elemtemp.spawn_frame+elemtemp.lifetime){
+        grille[x][y]=air();
     }
     else if(elemtemp.last_update!=update){
         if(elemtemp.gravity_scale>0) {
@@ -164,7 +178,7 @@ void update_gravity(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int update)
 
     }
 
-    void draw_under_mouse(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT], SDL_Surface *surface, struct element type,int brush_size) {
+    void draw_under_mouse(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT], SDL_Surface *surface, struct element type,int brush_size,int frame) {
         int x, y;
         SDL_GetMouseState(&x, &y);
         if (x > WINDOW_GAME_PADDING_HEIGHT && x < WINDOW_GAME_PADDING_HEIGHT + WINDOW_HEIGHT &&
@@ -174,8 +188,7 @@ void update_gravity(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int update)
             for (int i = x - brush_size / 2; i < x + brush_size / 2; i++) {
                 for (int j = y - brush_size; j < y + brush_size / 2; j++) {
                     if(i>=0 && i<PIXEL_WIDTH && j>=0 && j<PIXEL_HEIGHT){
-
-                        grille[i][j] = type;
+                        spawn_element(grille,type,i,j,frame);
 
                     }
 
@@ -253,13 +266,20 @@ void update_gravity(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int update)
                                 current_element = dirt();
                                 break;
                             case SDL_SCANCODE_KP_3:
-                                current_element = cloud();
+                                current_element = vapor();
+                                break;
+                            case SDL_SCANCODE_KP_5:
+                                current_element=fire();
                                 break;
                             case SDL_SCANCODE_KP_4:
                                 current_element=water();
                                 break;
+
                             case SDL_SCANCODE_KP_PLUS:
                                 current_element=water_sink();
+                                break;
+                            case SDL_SCANCODE_KP_MINUS:
+                                current_element=fire_sink();
                                 break;
                             case SDL_SCANCODE_UP:
                                 brush_size += 1;
@@ -281,7 +301,7 @@ void update_gravity(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int update)
 
                 }
                 if(mouse_held){
-                    draw_under_mouse(grille, surface, current_element, brush_size);
+                    draw_under_mouse(grille, surface, current_element, brush_size,frame);
                 }
 
             }
