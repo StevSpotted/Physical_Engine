@@ -27,7 +27,7 @@ struct element dirt(){
 
 struct element cloud(){
     SDL_Color color={150,150,150,255};
-    struct element elem={"cloud",color,2,-1,1,0,1,3,0};
+    struct element elem={"cloud",color,2,-1,0,1,1,3,0};
     return elem;
 };
 

@@ -94,34 +94,29 @@ void check_movement(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y
         if(elemtemp.gravity_scale>0) {
             if (y + 1 < PIXEL_WIDTH) {
                 if (elemtemp.pyramid_fall) {
-
-                    //randomly check all possibility
-                    dir_check func[3]={&check_vertical,&check_vertical_left,&check_vertical_right};
-                    int already_check[3]={0};
-                    for(int i=0;i<3;i++){
-                        int succes=0;
-                        int loop=1;
-                        while(loop){
-                            int temp_id=rand()%3;
-                            if(already_check[temp_id]==0){
-                                succes=func[temp_id](grille,x,y,update,direction);
-                                already_check[temp_id]=1;
-                                loop=0;
-                            }
-                        }
-                        if(succes){
-                            break;
+                    if(check_vertical(grille,x,y,update,direction)==0) {
+                        if(check_vertical_left(grille,x,y,update,direction)==0){
+                            check_vertical_right(grille,x,y,update,direction);
                         }
                     }
-
                 } else if (elemtemp.fluid) {
-
-                    if (grille[x][y + direction].weight <= 0 && grille[x][y + direction].weight!=elemtemp.weight) {//check bottom
-                        switch_points(grille, x, y, x, y + direction,update);
-                    } else if ((x - 1 >= 0) && grille[x - 1][y + direction].weight <= 0 && grille[x-1][y + direction].weight!=elemtemp.weight) {//CHECK bottom left
-                        switch_points(grille, x, y, x - 1, y + direction,update);
-                    } else if ((x + 1 < PIXEL_WIDTH) && grille[x + 1][y + direction].weight <= 0 && grille[x+1][y + direction].weight!=elemtemp.weight) {//CHECK bottom right
-                        switch_points(grille, x, y, x + 1, y + direction,update);
+                    //Also check all possibilities
+                    dir_check func[5]={&check_vertical,&check_vertical_left,&check_vertical_right, &check_right,&check_left};
+                    int already_check[5]={0};
+                    for(int i=0;i<5;i++) {
+                        int succes = 0;
+                        int loop = 1;
+                        while (loop) {
+                            int temp_id = rand() % 5;
+                            if (already_check[temp_id] == 0) {
+                                succes = func[temp_id](grille, x, y, update, direction);
+                                already_check[temp_id] = 1;
+                                loop = 0;
+                            }
+                        }
+                        if (succes) {
+                            break;
+                        }
                     }
                 } else {
                     if (grille[x][y + direction].weight == 0 && grille[x][y + direction].weight!=elemtemp.weight) {
