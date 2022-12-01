@@ -23,8 +23,8 @@ void update_render(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT], SDL_Rendere
     int xsize= (WINDOW_GAME_WIDTH / PIXEL_WIDTH);
     int ysize= (WINDOW_GAME_HEIGHT / PIXEL_HEIGHT);
     SDL_Rect pix={WINDOW_GAME_PADDING_HEIGHT,WINDOW_GAME_PADDING_WIDTH,xsize,ysize};
-    for(int x=0;x<PIXEL_WIDTH-2;x++) {
-        for (int y = 0; y <PIXEL_HEIGHT-2; y++) {
+    for(int x=0;x<PIXEL_WIDTH;x++) {
+        for (int y=0;y<PIXEL_HEIGHT;y++) {
             SDL_SetRenderDrawColor(renderer,grille[x][y].color.r,grille[x][y].color.g,grille[x][y].color.b,grille[x][y].color.a);
             SDL_RenderFillRect(renderer,&pix);
             pix.x = (x * xsize)+WINDOW_GAME_PADDING_HEIGHT;
@@ -212,8 +212,8 @@ void update_gravity(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT]) {
                                 break;
                             case SDL_SCANCODE_DOWN:
                                 brush_size -= 1;
-                                if(brush_size<=0){
-                                    brush_size=1;
+                                if(brush_size<=1){
+                                    brush_size=2;
                                 }
                                 break;
                         }
@@ -237,6 +237,16 @@ void update_gravity(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT]) {
             SDL_DestroyWindow(window);
         SDL_Quit();
         printf("Quit\n");
-        grille[PIXEL_HEIGHT][PIXEL_WIDTH];
+
+        //DEBUG
+        struct element a=air();
+        for (int i = 0; i < PIXEL_WIDTH; i++) {
+            for (int j = 0; j < PIXEL_HEIGHT; j++) {
+                if(grille[i][j].id!=a.id){
+                    printf("%d %d, %s\n",i,j,grille[i][j].name);
+                }
+
+            }
+        }
         return EXIT_SUCCESS;
     }
