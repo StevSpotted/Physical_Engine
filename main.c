@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <SDL2/SDL.h>
+#include <time.h>
+
 
 #include "elements.h"
 
@@ -11,13 +13,10 @@
 #define WINDOW_GAME_PADDING_HEIGHT 150
 #define WINDOW_GAME_WIDTH 600
 #define WINDOW_GAME_HEIGHT 600
-#define PIXEL_WIDTH 200
-#define PIXEL_HEIGHT 200
+#define PIXEL_WIDTH 300
+#define PIXEL_HEIGHT 300
 
-
-
-
-
+typedef int (*dir_check)(struct element[PIXEL_WIDTH][PIXEL_HEIGHT],int,int,int,int);
 
 void update_render(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT], SDL_Renderer *renderer){
     int xsize= (WINDOW_GAME_WIDTH / PIXEL_WIDTH);
@@ -33,64 +32,100 @@ void update_render(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT], SDL_Rendere
     }
     SDL_RenderPresent(renderer);
 }
-void reset_allmovestate(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT]) {
-    for (int i = 0; i < PIXEL_WIDTH; i++) {
-        for (int j = 0; j < PIXEL_HEIGHT; j++) {
-            grille[i][j].moved=0;
-        }
-    }
 
-}
 
-void switch_points(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x1,int y1,int x2,int y2){
+int switch_points(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x1,int y1,int x2,int y2,int update){
     if(x1<0 || x1>=PIXEL_WIDTH  || y1<0 || y1>PIXEL_HEIGHT || x2<0 || x2>=PIXEL_WIDTH  || y2<0 || y2>PIXEL_HEIGHT){
-        return;
+        return 0;
     }
     struct element elem1=grille[x1][y1];
     struct element elem2=grille[x2][y2];
-    if(elem1.gaz){
-        elem1.moved=1;
-    }
-    if(elem2.gaz){
-        elem2.moved=1;
-    }
+    elem1.last_update=update;
+    elem2.last_update=update;
     grille[x1][y1]=elem2;
     grille[x2][y2]=elem1;
+    return 1;
+}
+
+int check_vertical(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y, int update,int direction){
+    if ((y+direction<PIXEL_HEIGHT)&& grille[x][y + direction].weight == 0 && grille[x][y + direction].weight!=grille[x][y].weight) {//Check bottom first
+        return switch_points(grille, x, y, x, y + direction, update);
+    }
+    return 0;
+}
+
+int check_vertical_right(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y, int update,int direction) {
+    if ((y + direction < PIXEL_HEIGHT && y + direction > 0) && (x + 1 < PIXEL_WIDTH) &&
+        grille[x + 1][y + direction].weight <= 0 && grille[x + 1][y + direction].weight != grille[x][y].weight) {
+        return switch_points(grille, x, y, x + 1, y + direction, update);
+    }
+    return 0;
+}
+
+int check_vertical_left(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y, int update,int direction) {
+    if ((y+direction<PIXEL_HEIGHT&& y+direction>0)&& (x - 1 >= 0)&& grille[x - 1][y + direction].weight <= 0 && grille[x-1][y + direction].weight!=grille[x][y].weight) {
+        return switch_points(grille, x, y, x - 1, y + direction, update);
+    }
+    return 0;
+}
+
+int check_left(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y, int update,int direction) {
+    if ((x - 1 >= 0) && grille[x - 1][y].weight <= 0 && grille[x - 1][y].weight != grille[x][y].weight) {//check left
+        return switch_points(grille, x, y, x - 1, y, update);
+    }
+    return 0;
+}
+
+int check_right(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y, int update,int direction){
+    if ((x + 1 < PIXEL_WIDTH) && grille[x + 1][y].weight == 0 && grille[x+1][y].weight!=grille[x][y].weight) {//check right
+        return switch_points(grille, x, y, x + 1, y,update);
+    }
+    return 0;
 }
 
 
-void check_movement(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y){
+void check_movement(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y,int update){
     struct element elemtemp = grille[x][y];
     int direction=elemtemp.gravity_scale;
     if(elemtemp.gaz){
         direction=-elemtemp.gravity_scale;
     }
-    if(elemtemp.moved==0){
+    if(elemtemp.last_update!=update){
         if(elemtemp.gravity_scale>0) {
             if (y + 1 < PIXEL_WIDTH) {
                 if (elemtemp.pyramid_fall) {
-                    if ((y+direction<PIXEL_HEIGHT)&& grille[x][y + direction].weight == 0 && grille[x][y + direction].weight!=elemtemp.weight) {//Check bottom first
-                        switch_points(grille, x, y, x, y + direction);
-                    } else if ((y+direction<PIXEL_HEIGHT&& y+direction>0)&& (x - 1 >= 0)&& grille[x - 1][y + direction].weight <= 0 && grille[x-1][y + direction].weight!=elemtemp.weight) {
-                        switch_points(grille, x, y, x - 1, y + direction);
-                    } else if ((y+direction<PIXEL_HEIGHT && y+direction>0)&&(x + 1 < PIXEL_WIDTH)&& grille[x + 1][y + direction].weight <= 0 && grille[x+1][y + direction].weight!=elemtemp.weight) {
-                        switch_points(grille, x, y, x + 1, y + direction);
+
+                    //randomly check all possibility
+                    dir_check func[3]={&check_vertical,&check_vertical_left,&check_vertical_right};
+                    int already_check[3]={0};
+                    for(int i=0;i<3;i++){
+                        int succes=0;
+                        int loop=1;
+                        while(loop){
+                            int temp_id=rand()%3;
+                            if(already_check[temp_id]==0){
+                                succes=func[temp_id](grille,x,y,update,direction);
+                                already_check[temp_id]=1;
+                                loop=0;
+                            }
+                        }
+                        if(succes){
+                            break;
+                        }
                     }
+
                 } else if (elemtemp.fluid) {
+
                     if (grille[x][y + direction].weight <= 0 && grille[x][y + direction].weight!=elemtemp.weight) {//check bottom
-                        switch_points(grille, x, y, x, y + direction);
+                        switch_points(grille, x, y, x, y + direction,update);
                     } else if ((x - 1 >= 0) && grille[x - 1][y + direction].weight <= 0 && grille[x-1][y + direction].weight!=elemtemp.weight) {//CHECK bottom left
-                        switch_points(grille, x, y, x - 1, y + direction);
+                        switch_points(grille, x, y, x - 1, y + direction,update);
                     } else if ((x + 1 < PIXEL_WIDTH) && grille[x + 1][y + direction].weight <= 0 && grille[x+1][y + direction].weight!=elemtemp.weight) {//CHECK bottom right
-                        switch_points(grille, x, y, x + 1, y + direction);
-                    } else if ((x - 1 >= 0) && grille[x - 1][y].weight <= 0 && grille[x-1][y].weight!=elemtemp.weight) {//check left
-                        switch_points(grille, x, y, x - 1, y);
-                    } else if ((x + 1 < PIXEL_WIDTH) && grille[x + 1][y].weight == 0 && grille[x+1][y].weight!=elemtemp.weight) {//check right
-                        switch_points(grille, x, y, x + 1, y);
+                        switch_points(grille, x, y, x + 1, y + direction,update);
                     }
                 } else {
                     if (grille[x][y + direction].weight == 0 && grille[x][y + direction].weight!=elemtemp.weight) {
-                        switch_points(grille, x, y, x, y + direction);
+                        switch_points(grille, x, y, x, y + direction,update);
                     }
                 }
             }
@@ -98,10 +133,10 @@ void check_movement(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y
     }
 }
 
-void update_gravity(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT]) {
+void update_gravity(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int update) {
     for (int x = PIXEL_WIDTH - 1; x >= 0; x--) {
         for (int y = PIXEL_HEIGHT - 1; y >= 0; y--) {
-            check_movement(grille,x,y);
+            check_movement(grille,x,y,update);
         }
     }
 
@@ -175,14 +210,16 @@ void update_gravity(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT]) {
         SDL_Surface *surface = NULL;
         SDL_Event event;
         SDL_bool continuer = 1;
+        int frame=0;
         int mouse_held=0;
+        srand(time(NULL));
         while (continuer) {
-            reset_allmovestate(grille);
-            update_gravity(grille);
+            frame++;
+            update_gravity(grille,frame);
             update_render(grille, renderer);
             //WAIT
             while(SDL_PollEvent(&event)) {
-                switch (event.type) {
+                switch (event.type) {//INPUTS
 
                     case SDL_MOUSEBUTTONDOWN:
                         mouse_held=1;

@@ -15,7 +15,7 @@ struct element{
     int fluid;
     int gaz;
     int id;
-    int moved;
+    int last_update;
 };
 
 #endif //C_PROJECTS_ELEMENTS_H
