@@ -40,8 +40,12 @@ int switch_points(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x1,int y1
     }
     struct element elem1=grille[x1][y1];
     struct element elem2=grille[x2][y2];
+    if(elem1.last_update==update || elem2.last_update==update){
+        return 0;
+    }
     elem1.last_update=update;
     elem2.last_update=update;
+
     grille[x1][y1]=elem2;
     grille[x2][y2]=elem1;
     return 1;
@@ -90,16 +94,29 @@ void check_movement(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y
     if(elemtemp.gaz){
         direction=-elemtemp.gravity_scale;
     }
-    if(elemtemp.last_update!=update){
+    if(elemtemp.id<0){
+        struct element elemtemp2= get_element_by_id(elemtemp.id);
+        if(grille[x][y+1].weight<elemtemp2.weight || grille[x][y+1].weight==0){
+            grille[x][y+1]=elemtemp2;
+        }
+    }
+    else if(elemtemp.last_update!=update){
         if(elemtemp.gravity_scale>0) {
             if (y + 1 < PIXEL_WIDTH) {
                 if (elemtemp.pyramid_fall) {
                     if(check_vertical(grille,x,y,update,direction)==0) {
-                        if(check_vertical_left(grille,x,y,update,direction)==0){
-                            check_vertical_right(grille,x,y,update,direction);
+                        if(update%2){
+                            if (check_vertical_left(grille, x, y, update, direction) == 0) {
+                                check_vertical_right(grille, x, y, update, direction);
+                            }
+                        }
+                        if (check_vertical_right(grille, x, y, update, direction) == 0) {
+                            check_vertical_left(grille, x, y, update, direction);
                         }
                     }
-                } else if (elemtemp.fluid) {
+                }
+
+                else if (elemtemp.fluid) {
                     //Also check all possibilities
                     dir_check func[5]={&check_vertical,&check_vertical_left,&check_vertical_right, &check_right,&check_left};
                     int already_check[5]={0};
@@ -157,7 +174,9 @@ void update_gravity(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int update)
             for (int i = x - brush_size / 2; i < x + brush_size / 2; i++) {
                 for (int j = y - brush_size; j < y + brush_size / 2; j++) {
                     if(i>=0 && i<PIXEL_WIDTH && j>=0 && j<PIXEL_HEIGHT){
+
                         grille[i][j] = type;
+
                     }
 
                 }
@@ -239,6 +258,9 @@ void update_gravity(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int update)
                             case SDL_SCANCODE_KP_4:
                                 current_element=water();
                                 break;
+                            case SDL_SCANCODE_KP_PLUS:
+                                current_element=water_sink();
+                                break;
                             case SDL_SCANCODE_UP:
                                 brush_size += 1;
                                 break;
@@ -273,15 +295,6 @@ void update_gravity(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int update)
         SDL_Quit();
         printf("Quit\n");
 
-        //DEBUG
-        struct element a=air();
-        for (int i = 0; i < PIXEL_WIDTH; i++) {
-            for (int j = 0; j < PIXEL_HEIGHT; j++) {
-                if(grille[i][j].id!=a.id){
-                    printf("%d %d, %s\n",i,j,grille[i][j].name);
-                }
 
-            }
-        }
         return EXIT_SUCCESS;
     }

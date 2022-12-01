@@ -5,6 +5,15 @@
 #include "elements.h"
 
 struct element;
+typedef struct element (*lm)(void);
+
+struct element get_element_by_id(int id){
+    lm all[]={&air,&sand,&dirt,&cloud,&water};
+    if(id<0){
+        return all[id*(-1)]();
+    }
+    return all[id]();
+}
 
 struct element air(){
     SDL_Color color={0,0,100,100};
@@ -35,4 +44,11 @@ struct element water(){
     SDL_Color color={0,60,150,100};
     struct element elem={"water",color,1,-1,0,1,0,4,0};
     return elem;
+}
+
+struct element water_sink(){
+    SDL_Color color={0,0,0,100};
+    struct element elem={"water sink",color,1,999,0,1,0,-4,0};
+    return elem;
+
 }
