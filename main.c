@@ -124,7 +124,7 @@ void check_movement(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y
                                 check_vertical_right(grille, x, y, update, direction);
                             }
                         }
-                        if (check_vertical_right(grille, x, y, update, direction) == 0) {
+                        else if (check_vertical_right(grille, x, y, update, direction) == 0) {
                             check_vertical_left(grille, x, y, update, direction);
                         }
                     }
@@ -132,22 +132,24 @@ void check_movement(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y
 
                 else if (elemtemp.fluid) {
                     //Also check all possibilities
-                    dir_check func[5]={&check_vertical,&check_vertical_left,&check_vertical_right, &check_right,&check_left};
-                    int already_check[5]={0};
-                    for(int i=0;i<5;i++) {
-                        int succes = 0;
-                        int loop = 1;
-                        while (loop) {
-                            int temp_id = rand() % 5;
-                            if (already_check[temp_id] == 0) {
-                                succes = func[temp_id](grille, x, y, update, direction);
-                                already_check[temp_id] = 1;
-                                loop = 0;
+
+                        dir_check func[5] = {&check_vertical,&check_vertical_left, &check_vertical_right, &check_right, &check_left};
+                        int already_check[5] = {0};
+                        for (int i = 0; i < 5; i++) {
+                            int succes = 0;
+                            int loop = 1;
+                            while (loop) {
+                                int temp_id = rand() % 5;
+                                if (already_check[temp_id] == 0) {
+                                    succes = func[temp_id](grille, x, y, update, direction);
+                                    already_check[temp_id] = 1;
+                                    loop = 0;
+                                }
                             }
-                        }
-                        if (succes) {
-                            break;
-                        }
+                            if (succes) {
+                                break;
+                            }
+
                     }
                 } else {
                     if (grille[x][y + direction].weight == 0 && grille[x][y + direction].weight!=elemtemp.weight) {
@@ -237,6 +239,7 @@ void update_gravity(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int update)
         SDL_Surface *surface = NULL;
         SDL_Event event;
         SDL_bool continuer = 1;
+        int start_time= time(NULL);
         int frame=0;
         int mouse_held=0;
         srand(time(NULL));
@@ -303,7 +306,7 @@ void update_gravity(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int update)
                 if(mouse_held){
                     draw_under_mouse(grille, surface, current_element, brush_size,frame);
                 }
-
+                //fps
             }
         }
 
