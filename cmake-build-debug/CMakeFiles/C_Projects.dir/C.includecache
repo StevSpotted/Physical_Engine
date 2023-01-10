@@ -6,17 +6,9 @@
 
 #IncludeRegexTransform: 
 
-/mnt/c/Users/Coco/Desktop/C Projects/draw.c
-headers/draw.h
-/mnt/c/Users/Coco/Desktop/C Projects/headers/draw.h
-
-/mnt/c/Users/Coco/Desktop/C Projects/elements.c
+/mnt/c/Users/Coco/Desktop/C Projects/headers/define.h
 SDL2/SDL.h
 -
-headers/elements.h
-/mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
-
-/mnt/c/Users/Coco/Desktop/C Projects/headers/define.h
 elements.h
 /mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
 
@@ -28,6 +20,16 @@ define.h
 elements.h
 /mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
 
+/mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
+
+/mnt/c/Users/Coco/Desktop/C Projects/headers/init.h
+stdio.h
+-
+stdlib.h
+-
+define.h
+/mnt/c/Users/Coco/Desktop/C Projects/headers/define.h
+elements.h
 /mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
 
 /mnt/c/Users/Coco/Desktop/C Projects/headers/update.h
@@ -57,8 +59,6 @@ headers/update.h
 /mnt/c/Users/Coco/Desktop/C Projects/headers/update.h
 headers/draw.h
 /mnt/c/Users/Coco/Desktop/C Projects/headers/draw.h
-
-/mnt/c/Users/Coco/Desktop/C Projects/update.c
-headers/update.h
-/mnt/c/Users/Coco/Desktop/C Projects/headers/update.h
+headers/init.h
+/mnt/c/Users/Coco/Desktop/C Projects/headers/init.h
 

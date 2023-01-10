@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/C_Projects.dir/draw.c.o"
   "CMakeFiles/C_Projects.dir/elements.c.o"
+  "CMakeFiles/C_Projects.dir/init.c.o"
   "CMakeFiles/C_Projects.dir/main.c.o"
   "CMakeFiles/C_Projects.dir/update.c.o"
   "C_Projects"

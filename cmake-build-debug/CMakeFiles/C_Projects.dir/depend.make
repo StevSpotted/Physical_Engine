@@ -9,9 +9,15 @@ CMakeFiles/C_Projects.dir/draw.c.o: ../headers/elements.h
 CMakeFiles/C_Projects.dir/elements.c.o: ../elements.c
 CMakeFiles/C_Projects.dir/elements.c.o: ../headers/elements.h
 
+CMakeFiles/C_Projects.dir/init.c.o: ../headers/define.h
+CMakeFiles/C_Projects.dir/init.c.o: ../headers/elements.h
+CMakeFiles/C_Projects.dir/init.c.o: ../headers/init.h
+CMakeFiles/C_Projects.dir/init.c.o: ../init.c
+
 CMakeFiles/C_Projects.dir/main.c.o: ../headers/define.h
 CMakeFiles/C_Projects.dir/main.c.o: ../headers/draw.h
 CMakeFiles/C_Projects.dir/main.c.o: ../headers/elements.h
+CMakeFiles/C_Projects.dir/main.c.o: ../headers/init.h
 CMakeFiles/C_Projects.dir/main.c.o: ../headers/update.h
 CMakeFiles/C_Projects.dir/main.c.o: ../main.c
 

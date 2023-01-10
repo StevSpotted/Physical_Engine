@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_C
   "/mnt/c/Users/Coco/Desktop/C Projects/draw.c" "/mnt/c/Users/Coco/Desktop/C Projects/cmake-build-debug/CMakeFiles/C_Projects.dir/draw.c.o"
   "/mnt/c/Users/Coco/Desktop/C Projects/elements.c" "/mnt/c/Users/Coco/Desktop/C Projects/cmake-build-debug/CMakeFiles/C_Projects.dir/elements.c.o"
+  "/mnt/c/Users/Coco/Desktop/C Projects/init.c" "/mnt/c/Users/Coco/Desktop/C Projects/cmake-build-debug/CMakeFiles/C_Projects.dir/init.c.o"
   "/mnt/c/Users/Coco/Desktop/C Projects/main.c" "/mnt/c/Users/Coco/Desktop/C Projects/cmake-build-debug/CMakeFiles/C_Projects.dir/main.c.o"
   "/mnt/c/Users/Coco/Desktop/C Projects/update.c" "/mnt/c/Users/Coco/Desktop/C Projects/cmake-build-debug/CMakeFiles/C_Projects.dir/update.c.o"
   )

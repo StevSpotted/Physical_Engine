@@ -6,7 +6,9 @@
 #ifndef C_PROJECTS_DEFINE_H
 #define C_PROJECTS_DEFINE_H
 
+#include <SDL2/SDL.h>
 #include "elements.h"
+
 
 #define WINDOW_WIDTH 900
 #define WINDOW_HEIGHT 900
@@ -18,6 +20,13 @@
 #define PIXEL_HEIGHT 300
 
 typedef int (*dir_check)(struct element[PIXEL_WIDTH][PIXEL_HEIGHT],int,int,int,int);
+
+//struct with all information
+struct game{
+    struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT];
+    SDL_Window *window;
+    SDL_Renderer *renderer;
+};
 
 
 

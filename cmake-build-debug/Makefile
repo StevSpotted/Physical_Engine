@@ -196,6 +196,33 @@ elements.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/C_Projects.dir/build.make CMakeFiles/C_Projects.dir/elements.c.s
 .PHONY : elements.c.s
 
+init.o: init.c.o
+
+.PHONY : init.o
+
+# target to build an object file
+init.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/C_Projects.dir/build.make CMakeFiles/C_Projects.dir/init.c.o
+.PHONY : init.c.o
+
+init.i: init.c.i
+
+.PHONY : init.i
+
+# target to preprocess a source file
+init.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/C_Projects.dir/build.make CMakeFiles/C_Projects.dir/init.c.i
+.PHONY : init.c.i
+
+init.s: init.c.s
+
+.PHONY : init.s
+
+# target to generate assembly for a file
+init.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/C_Projects.dir/build.make CMakeFiles/C_Projects.dir/init.c.s
+.PHONY : init.c.s
+
 main.o: main.c.o
 
 .PHONY : main.o
@@ -265,6 +292,9 @@ help:
 	@echo "... elements.o"
 	@echo "... elements.i"
 	@echo "... elements.s"
+	@echo "... init.o"
+	@echo "... init.i"
+	@echo "... init.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

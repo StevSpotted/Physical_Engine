@@ -7,42 +7,36 @@
 #include "headers/elements.h"
 #include "headers/define.h"
 #include "headers/update.h"
-#include "headers/draw.h"s
+#include "headers/draw.h"
+#include "headers/init.h"
 
-    int main() {
-        //main parameters
-        struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT];
-        fill_air(grille);
+int main() {
+    struct game game;
+    fill_air(game.grille);
+
+// initialisation de la video
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+        fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n",SDL_GetError());
+        exit(EXIT_FAILURE); // On quitte le programme
+    }
+    if (0 != SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN, &(game.window), &(game.renderer))) {
+        fprintf(stderr, "Erreur SDL_CreateWindowAndRenderer : %s", SDL_GetError());
+        exit(EXIT_FAILURE);
+    }
+// paint a black background on the windows
+    SDL_SetRenderTarget(game.renderer, NULL); /* Le renderer est la cible de rendu. */
+    SDL_SetRenderDrawColor(game.renderer, 0, 0, 0, 255);
+// mise a jour de l'affichage
+    SDL_RenderPresent(game.renderer);
+    if (game.renderer == NULL) {
+        fprintf(stderr, "Echec de creation du renderer : %s", SDL_GetError());
+    }
+    SDL_SetRenderTarget(game.renderer, NULL);
+    // mise a jour de l'affichage
+
+
         struct element current_element = sand();
         int brush_size = 6;
-
-
-        // une fenêtre
-        SDL_Window *window = NULL;
-// un renderer (chargé du rendu graphique)
-        SDL_Renderer *renderer = NULL;
-// initialisation de la video
-        if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-            fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n",
-                    SDL_GetError());
-            exit(EXIT_FAILURE); // On quitte le programme
-        }
-        if (0 != SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN, &window,
-                                             &renderer)) {
-            fprintf(stderr, "Erreur SDL_CreateWindowAndRenderer : %s", SDL_GetError());
-            return EXIT_FAILURE;
-        }
-// paint a black background on the windows
-        SDL_SetRenderTarget(renderer, NULL); /* Le renderer est la cible de rendu. */
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-// mise a jour de l'affichage
-        SDL_RenderPresent(renderer);
-        if (renderer == NULL) {
-            fprintf(stderr, "Echec de creation du renderer : %s", SDL_GetError());
-        }
-        SDL_SetRenderTarget(renderer, NULL);
-        // mise a jour de l'affichage
-
 
         SDL_Surface *surface = NULL;
         SDL_Event event;
@@ -53,8 +47,8 @@
         srand(time(NULL));
         while (continuer) {
             frame++;
-            update_gravity(grille,frame);
-            update_render(grille, renderer);
+            update_gravity(game.grille,frame);
+            update_render(game.grille, game.renderer);
             //WAIT
             while(SDL_PollEvent(&event)) {
                 switch (event.type) {//INPUTS
@@ -96,7 +90,7 @@
                                 brush_size += 1;
                                 break;
                             case SDL_SCANCODE_R:
-                                fill_air(grille);
+                                fill_air(game.grille);
                                 break;
                             case SDL_SCANCODE_DOWN:
                                 brush_size -= 1;
@@ -112,17 +106,17 @@
 
                 }
                 if(mouse_held){
-                    draw_under_mouse(grille, surface, current_element, brush_size,frame);
+                    draw_under_mouse(game.grille, surface, current_element, brush_size,frame);
                 }
                 //fps
             }
         }
 
 
-        if (NULL != renderer)
-            SDL_DestroyRenderer(renderer);
-        if (NULL != window)
-            SDL_DestroyWindow(window);
+        if (NULL != game.renderer)
+            SDL_DestroyRenderer(game.renderer);
+        if (NULL != game.window)
+            SDL_DestroyWindow(game.window);
         SDL_Quit();
         printf("Quit\n");
 

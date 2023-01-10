@@ -9,10 +9,16 @@ CMakeFiles/C_Projects.dir/draw.c.o
 CMakeFiles/C_Projects.dir/elements.c.o
  /mnt/c/Users/Coco/Desktop/C Projects/elements.c
  /mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
+CMakeFiles/C_Projects.dir/init.c.o
+ /mnt/c/Users/Coco/Desktop/C Projects/headers/define.h
+ /mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
+ /mnt/c/Users/Coco/Desktop/C Projects/headers/init.h
+ /mnt/c/Users/Coco/Desktop/C Projects/init.c
 CMakeFiles/C_Projects.dir/main.c.o
  /mnt/c/Users/Coco/Desktop/C Projects/headers/define.h
  /mnt/c/Users/Coco/Desktop/C Projects/headers/draw.h
  /mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
+ /mnt/c/Users/Coco/Desktop/C Projects/headers/init.h
  /mnt/c/Users/Coco/Desktop/C Projects/headers/update.h
  /mnt/c/Users/Coco/Desktop/C Projects/main.c
 CMakeFiles/C_Projects.dir/update.c.o

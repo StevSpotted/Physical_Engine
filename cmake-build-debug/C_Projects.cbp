@@ -91,7 +91,13 @@
 		<Unit filename="/mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h">
 			<Option target="C_Projects"/>
 		</Unit>
+		<Unit filename="/mnt/c/Users/Coco/Desktop/C Projects/headers/init.h">
+			<Option target="C_Projects"/>
+		</Unit>
 		<Unit filename="/mnt/c/Users/Coco/Desktop/C Projects/headers/update.h">
+			<Option target="C_Projects"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/Coco/Desktop/C Projects/init.c">
 			<Option target="C_Projects"/>
 		</Unit>
 		<Unit filename="/mnt/c/Users/Coco/Desktop/C Projects/main.c">

@@ -72,7 +72,7 @@ void check_movement(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y
     if(elemtemp.gaz){
         direction=-elemtemp.gravity_scale;
     }
-    if(elemtemp.id<0){
+    if(elemtemp.id<0){//If it's a particle spawner
         struct element elemtemp2= get_element_by_id(elemtemp.id);
 
         if(elemtemp2.gaz==0 && (grille[x][y+1].weight<elemtemp2.weight || grille[x][y+1].weight==0)){
@@ -82,26 +82,26 @@ void check_movement(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y
             spawn_element(grille,elemtemp2,x,y-1, update);
         }
     }
-    else if(elemtemp.lifetime>0 && elemtemp.last_update>elemtemp.spawn_frame+elemtemp.lifetime){
+    else if(elemtemp.lifetime>0 && elemtemp.last_update>elemtemp.spawn_frame+elemtemp.lifetime){//If it's a particle with a lifetime and it's time to die
         grille[x][y]=air();
     }
-    else if(elemtemp.last_update!=update){
-        if(elemtemp.gravity_scale>0) {
+    else if(elemtemp.last_update!=update){ // If it's not already updated in this frame
+        if(elemtemp.gravity_scale>0) { // If it's a normal element (not a gaz)
             if (y + 1 < PIXEL_WIDTH) {
-                if (elemtemp.pyramid_fall) {
-                    if(check_vertical(grille,x,y,update,direction)==0) {
-                        if(update%2){
-                            if (check_vertical_left(grille, x, y, update, direction) == 0) {
-                                check_vertical_right(grille, x, y, update, direction);
+                if (elemtemp.pyramid_fall) { // If it's falling in a pyramid shape (like sand)
+                    if(check_vertical(grille,x,y,update,direction)==0) { // If it can't fall vertically
+                        if(update%2){ // If it's an odd frame
+                            if (check_vertical_left(grille, x, y, update, direction) == 0) {// If it can't fall diagonally left
+                                check_vertical_right(grille, x, y, update, direction); // Try to fall diagonally right
                             }
                         }
-                        else if (check_vertical_right(grille, x, y, update, direction) == 0) {
-                            check_vertical_left(grille, x, y, update, direction);
+                        else if (check_vertical_right(grille, x, y, update, direction) == 0) { // If it can't fall diagonally right
+                            check_vertical_left(grille, x, y, update, direction); // Try to fall diagonally left
                         }
                     }
                 }
 
-                else if (elemtemp.fluid) {
+                else if (elemtemp.fluid) {// If it's a fluid
                     //Also check all possibilities
 
                     dir_check func[5] = {&check_vertical,&check_vertical_left, &check_vertical_right, &check_right, &check_left};
@@ -141,14 +141,7 @@ void update_gravity(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int update)
     }
 }
 
-void fill_air(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT]) {
-    for (int i = 0; i < PIXEL_WIDTH; i++) {
-        for (int j = 0; j < PIXEL_HEIGHT; j++) {
-            grille[i][j] = air();
-        }
-    }
 
-}
 
 void draw_under_mouse(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT], SDL_Surface *surface, struct element type,int brush_size,int frame) {
     int x, y;
