@@ -2,7 +2,7 @@
 // Created by Coco on 24/11/2022.
 //
 #include <SDL2/SDL.h>
-#include "elements.h"
+#include "headers/elements.h"
 
 struct element;
 typedef struct element (*lm)(void);

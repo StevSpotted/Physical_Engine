@@ -6,7 +6,39 @@
 
 #IncludeRegexTransform: 
 
-/mnt/c/Users/Coco/Desktop/C Projects/elements.h
+/mnt/c/Users/Coco/Desktop/C Projects/draw.c
+headers/draw.h
+/mnt/c/Users/Coco/Desktop/C Projects/headers/draw.h
+
+/mnt/c/Users/Coco/Desktop/C Projects/elements.c
+SDL2/SDL.h
+-
+headers/elements.h
+/mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
+
+/mnt/c/Users/Coco/Desktop/C Projects/headers/define.h
+elements.h
+/mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
+
+/mnt/c/Users/Coco/Desktop/C Projects/headers/draw.h
+SDL2/SDL.h
+-
+define.h
+/mnt/c/Users/Coco/Desktop/C Projects/headers/define.h
+elements.h
+/mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
+
+/mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
+
+/mnt/c/Users/Coco/Desktop/C Projects/headers/update.h
+stdlib.h
+-
+SDL2/SDL.h
+-
+define.h
+/mnt/c/Users/Coco/Desktop/C Projects/headers/define.h
+elements.h
+/mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
 
 /mnt/c/Users/Coco/Desktop/C Projects/main.c
 stdio.h
@@ -17,6 +49,16 @@ SDL2/SDL.h
 -
 time.h
 -
-elements.h
-/mnt/c/Users/Coco/Desktop/C Projects/elements.h
+headers/elements.h
+/mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
+headers/define.h
+/mnt/c/Users/Coco/Desktop/C Projects/headers/define.h
+headers/update.h
+/mnt/c/Users/Coco/Desktop/C Projects/headers/update.h
+headers/draw.h
+/mnt/c/Users/Coco/Desktop/C Projects/headers/draw.h
+
+/mnt/c/Users/Coco/Desktop/C Projects/update.c
+headers/update.h
+/mnt/c/Users/Coco/Desktop/C Projects/headers/update.h
 

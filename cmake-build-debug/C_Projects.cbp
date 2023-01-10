@@ -76,13 +76,28 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/mnt/c/Users/Coco/Desktop/C Projects/draw.c">
+			<Option target="C_Projects"/>
+		</Unit>
 		<Unit filename="/mnt/c/Users/Coco/Desktop/C Projects/elements.c">
 			<Option target="C_Projects"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/Coco/Desktop/C Projects/elements.h">
+		<Unit filename="/mnt/c/Users/Coco/Desktop/C Projects/headers/define.h">
+			<Option target="C_Projects"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/Coco/Desktop/C Projects/headers/draw.h">
+			<Option target="C_Projects"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h">
+			<Option target="C_Projects"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/Coco/Desktop/C Projects/headers/update.h">
 			<Option target="C_Projects"/>
 		</Unit>
 		<Unit filename="/mnt/c/Users/Coco/Desktop/C Projects/main.c">
+			<Option target="C_Projects"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/Coco/Desktop/C Projects/update.c">
 			<Option target="C_Projects"/>
 		</Unit>
 		<Unit filename="/mnt/c/Users/Coco/Desktop/C Projects/CMakeLists.txt">

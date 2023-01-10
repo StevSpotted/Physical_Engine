@@ -142,6 +142,33 @@ C_Projects/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/C_Projects.dir/build.make CMakeFiles/C_Projects.dir/build
 .PHONY : C_Projects/fast
 
+draw.o: draw.c.o
+
+.PHONY : draw.o
+
+# target to build an object file
+draw.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/C_Projects.dir/build.make CMakeFiles/C_Projects.dir/draw.c.o
+.PHONY : draw.c.o
+
+draw.i: draw.c.i
+
+.PHONY : draw.i
+
+# target to preprocess a source file
+draw.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/C_Projects.dir/build.make CMakeFiles/C_Projects.dir/draw.c.i
+.PHONY : draw.c.i
+
+draw.s: draw.c.s
+
+.PHONY : draw.s
+
+# target to generate assembly for a file
+draw.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/C_Projects.dir/build.make CMakeFiles/C_Projects.dir/draw.c.s
+.PHONY : draw.c.s
+
 elements.o: elements.c.o
 
 .PHONY : elements.o
@@ -196,6 +223,33 @@ main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/C_Projects.dir/build.make CMakeFiles/C_Projects.dir/main.c.s
 .PHONY : main.c.s
 
+update.o: update.c.o
+
+.PHONY : update.o
+
+# target to build an object file
+update.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/C_Projects.dir/build.make CMakeFiles/C_Projects.dir/update.c.o
+.PHONY : update.c.o
+
+update.i: update.c.i
+
+.PHONY : update.i
+
+# target to preprocess a source file
+update.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/C_Projects.dir/build.make CMakeFiles/C_Projects.dir/update.c.i
+.PHONY : update.c.i
+
+update.s: update.c.s
+
+.PHONY : update.s
+
+# target to generate assembly for a file
+update.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/C_Projects.dir/build.make CMakeFiles/C_Projects.dir/update.c.s
+.PHONY : update.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -205,12 +259,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... C_Projects"
+	@echo "... draw.o"
+	@echo "... draw.i"
+	@echo "... draw.s"
 	@echo "... elements.o"
 	@echo "... elements.i"
 	@echo "... elements.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... update.o"
+	@echo "... update.i"
+	@echo "... update.s"
 .PHONY : help
 
 
