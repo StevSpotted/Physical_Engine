@@ -12,24 +12,6 @@ SDL2/SDL.h
 elements.h
 /mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
 
-/mnt/c/Users/Coco/Desktop/C Projects/headers/draw.h
-SDL2/SDL.h
--
-define.h
-/mnt/c/Users/Coco/Desktop/C Projects/headers/define.h
-elements.h
-/mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
-
-/mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
-
-/mnt/c/Users/Coco/Desktop/C Projects/headers/init.h
-stdio.h
--
-stdlib.h
--
-define.h
-/mnt/c/Users/Coco/Desktop/C Projects/headers/define.h
-elements.h
 /mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
 
 /mnt/c/Users/Coco/Desktop/C Projects/headers/update.h
@@ -42,23 +24,7 @@ define.h
 elements.h
 /mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
 
-/mnt/c/Users/Coco/Desktop/C Projects/main.c
-stdio.h
--
-stdlib.h
--
-SDL2/SDL.h
--
-time.h
--
-headers/elements.h
-/mnt/c/Users/Coco/Desktop/C Projects/headers/elements.h
-headers/define.h
-/mnt/c/Users/Coco/Desktop/C Projects/headers/define.h
+/mnt/c/Users/Coco/Desktop/C Projects/update.c
 headers/update.h
 /mnt/c/Users/Coco/Desktop/C Projects/headers/update.h
-headers/draw.h
-/mnt/c/Users/Coco/Desktop/C Projects/headers/draw.h
-headers/init.h
-/mnt/c/Users/Coco/Desktop/C Projects/headers/init.h
 

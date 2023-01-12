@@ -22,6 +22,7 @@ struct element{
     int hot;
     int spawn_frame;
     int lifetime;
+    int element_transformed_id;
 };
 
 #endif //C_PROJECTS_ELEMENTS_H
@@ -33,6 +34,7 @@ struct element dirt();
 struct element vapor();
 struct element water();
 struct element fire();
+struct element glass();
 //ELEMENT GENERATOR
 struct element water_sink();
 struct element fire_sink();

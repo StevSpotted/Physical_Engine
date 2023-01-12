@@ -26,6 +26,9 @@ struct game{
     struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT];
     SDL_Window *window;
     SDL_Renderer *renderer;
+    //USER SETTINGS
+    int brush_size;
+    struct element current_element;
 };
 
 

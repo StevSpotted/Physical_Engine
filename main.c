@@ -12,6 +12,8 @@
 
 int main() {
     struct game game;
+    game.brush_size=6;
+    game.current_element=sand();
     fill_air(game.grille);
 
 // initialisation de la video
@@ -35,13 +37,11 @@ int main() {
     // mise a jour de l'affichage
 
 
-        struct element current_element = sand();
-        int brush_size = 6;
+
 
         SDL_Surface *surface = NULL;
         SDL_Event event;
         SDL_bool continuer = 1;
-        int start_time= time(NULL);
         int frame=0;
         int mouse_held=0;
         srand(time(NULL));
@@ -62,40 +62,39 @@ int main() {
                     case SDL_KEYDOWN:
                         switch (event.key.keysym.scancode) {
                             case SDL_SCANCODE_KP_0:
-                                current_element = air();
+                                game.current_element = air();
                                 break;
                             case SDL_SCANCODE_KP_1:
-                                current_element = sand();
+                                game.current_element = sand();
                                 break;
                             case SDL_SCANCODE_KP_2:
-                                current_element = dirt();
+                                game.current_element = dirt();
                                 break;
                             case SDL_SCANCODE_KP_3:
-                                current_element = vapor();
+                                game.current_element = vapor();
                                 break;
                             case SDL_SCANCODE_KP_5:
-                                current_element=fire();
+                                game.current_element=fire();
                                 break;
                             case SDL_SCANCODE_KP_4:
-                                current_element=water();
+                                game.current_element=water();
                                 break;
-
                             case SDL_SCANCODE_KP_PLUS:
-                                current_element=water_sink();
+                                game.current_element=water_sink();
                                 break;
                             case SDL_SCANCODE_KP_MINUS:
-                                current_element=fire_sink();
+                                game.current_element=fire_sink();
                                 break;
                             case SDL_SCANCODE_UP:
-                                brush_size += 1;
+                                game.brush_size += 1;
                                 break;
                             case SDL_SCANCODE_R:
                                 fill_air(game.grille);
                                 break;
                             case SDL_SCANCODE_DOWN:
-                                brush_size -= 1;
-                                if(brush_size<=1){
-                                    brush_size=2;
+                                game.brush_size -= 1;
+                                if(game.brush_size<=1){
+                                    game.brush_size=2;
                                 }
                                 break;
                         }
@@ -106,7 +105,7 @@ int main() {
 
                 }
                 if(mouse_held){
-                    draw_under_mouse(game.grille, surface, current_element, brush_size,frame);
+                    draw_under_mouse(game.grille, surface, game.current_element, game.brush_size,frame);
                 }
                 //fps
             }

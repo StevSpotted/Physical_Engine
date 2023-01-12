@@ -8,6 +8,18 @@ int switch_points(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x1,int y1
     if(x1<0 || x1>=PIXEL_WIDTH  || y1<0 || y1>PIXEL_HEIGHT || x2<0 || x2>=PIXEL_WIDTH  || y2<0 || y2>PIXEL_HEIGHT){
         return 0;
     }
+    if(grille[x1][y1].hot && grille[x2][y2].flamable){
+        grille[x2][y2]= get_element_by_id(grille[x2][y2].element_transformed_id);
+        grille[x2][y2].last_update=update;
+        grille[x2][y2].spawn_frame=update;
+        return 1;
+    }
+    if(grille[x2][y2].hot && grille[x1][y1].flamable){
+        grille[x1][y1]= get_element_by_id(grille[x1][y1].element_transformed_id);
+        grille[x1][y1].last_update=update;
+        grille[x1][y1].spawn_frame=update;
+        return 1;
+    }
     struct element elem1=grille[x1][y1];
     struct element elem2=grille[x2][y2];
     if(elem1.last_update==update || elem2.last_update==update){
@@ -22,7 +34,7 @@ int switch_points(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x1,int y1
 }
 
 int check_vertical(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y, int update,int direction){
-    if ((y+direction<PIXEL_HEIGHT)&& grille[x][y + direction].weight == 0 && grille[x][y + direction].weight!=grille[x][y].weight) {//Check bottom first
+    if ((y+direction<PIXEL_HEIGHT)&& grille[x][y + direction].weight == 0 && grille[x][y + direction].weight!=grille[x][y].weight) {//Check bottom firsts
         return switch_points(grille, x, y, x, y + direction, update);
     }
     return 0;
@@ -31,7 +43,7 @@ int check_vertical(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y,
 int check_vertical_right(struct element grille[PIXEL_WIDTH][PIXEL_HEIGHT],int x,int y, int update,int direction) {
     if ((y + direction < PIXEL_HEIGHT && y + direction > 0) && (x + 1 < PIXEL_WIDTH) &&
         grille[x + 1][y + direction].weight <= 0 && grille[x + 1][y + direction].weight != grille[x][y].weight) {
-        return switch_points(grille, x, y, x + 1, y + direction, update);
+            return switch_points(grille, x, y, x + 1, y + direction, update);
     }
     return 0;
 }
