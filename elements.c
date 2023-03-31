@@ -53,7 +53,7 @@ struct element fire(){
 
 struct element glass(){
     //grey color
-    SDL_Color color={100,100,100,255};
+    SDL_Color color={100,100,100,155};
     struct element elem={"glass",color,0,1,0,0,0,6,0,0,0,0,-1,6};
     return elem;
 }
